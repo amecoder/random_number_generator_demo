@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Pick random number</title>
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+<script src="./jquery.animateNumber.js"></script>
+<script>
+
+    function makeNumber() {
+        var max_number = 300;
+        var picked_number = Math.floor((Math.random() * max_number) + 1);
+        var padding_zeros = '';
+          
+            for(var i = 0, l = max_number.toString().length; i < l; i++) {
+                padding_zeros += '0';
+            }
+       
+        var padded_now, numberStep = function(now, tween) {
+            var target = $(tween.elem),
+            rounded_now = Math.round(now);
+
+            var rounded_now_string = rounded_now.toString()
+            padded_now = padding_zeros + rounded_now_string;
+            padded_now = padded_now.substring(rounded_now_string.length);
+
+            target.prop('number', rounded_now).text(padded_now);
+        };
+        $("#print").text("000");
+        $('#print').animateNumber({ number: picked_number, 
+                                                numberStep: numberStep},
+                                                //color: '#ff0000', 'font-size': '500px'},
+                                               //easing: 'easeInQuad'},
+                                            5000,
+                                            function() {
+                                                $('#message').show();
+                                            });    
+        
+    }
+    
+</script>
+</head>
+
+<body style="margin; 0 auto;">
+    <span id="print" style="font-size:500px;">000</span> 
+    <p></p>
+    <span id="message" style="display:none;">축하드립니다!</span>
+    <p></p>
+    <form>
+        <input type="button" value="추첨" onclick="$('#message').hide(); $('#print').text('000'); makeNumber();" />
+    </form>
+</body>
+
+</html>
